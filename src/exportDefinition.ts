@@ -6,8 +6,8 @@ export class ExportDefinition {
     constructor(
         public collectionName: string,
         public sqlQuery: string,
-        public beforeInsert?: Function,
-        public afterInsert?: Function
+        public beforeEach?: Function,
+        public afterEach?: Function
         ) {}
 
     async run(): Promise<void> {
@@ -16,10 +16,10 @@ export class ExportDefinition {
 
         try {
             await sql.unsafe(this.sqlQuery).cursor(2000, async (rows: any) => {
-                if (this.beforeInsert) { await this.beforeInsert(rows); }
+                if (this.beforeEach) { await this.beforeEach(rows); }
                 console.log(rows)
                 await mongo.db(process.env.MONGO_DB_NAME).collection(this.collectionName).insertMany(rows);
-                if (this.afterInsert) { await this.afterInsert(); }
+                if (this.afterEach) { await this.afterEach(); }
             }) 
         } catch (error) {
             throw error;
