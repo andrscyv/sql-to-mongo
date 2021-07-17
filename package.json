@@ -1,0 +1,30 @@
+{
+  "name": "psql2mongo",
+  "version": "1.0.0",
+  "description": "Export data from pgSql to mongo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrscyv/psql2mongo.git"
+  },
+  "keywords": [
+    "export",
+    "data",
+    "postgres",
+    "postgreSQL",
+    "psql",
+    "mongo",
+    "mongodb",
+    "pgsql",
+    "sql"
+  ],
+  "author": "Andres Cruz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrscyv/psql2mongo/issues"
+  },
+  "homepage": "https://github.com/andrscyv/psql2mongo#readme"
+}
