@@ -1,17 +1,22 @@
-import { ExportDefinition } from './exportDefinition';
-import { loadExportDefs } from './exportDefLoader';
+import { ExportDefinition } from './exports/exportDefinition';
+import { loadExportDefs } from './exports/exportDefLoader';
+import { runExports } from './exports/exporter';
+import { ExportWriter } from './writers/exportWriter';
 import sql from './sqlDb';
+import { ConsoleWriter } from './writers/consoleWriter';
 
 
 
-async function run():Promise<void> {
+async function main():Promise<void> {
    const exportDefs: ExportDefinition[] = await loadExportDefs(['test.sql']);
-   for (const exportDef of exportDefs) {
-       console.log('runnin')
-       await exportDef.run();
-   }
+   let opts;
+   const writer = new ConsoleWriter();
+   await runExports(exportDefs, writer, opts);
    await sql.end({ timeout: 5 });
    process.exit(0);
 }
 
-run().catch(err => console.error(err));
+// function getWriter(opts:any): ExportWriter {
+//    return null;
+// }
+main().catch(err => console.error(err));
