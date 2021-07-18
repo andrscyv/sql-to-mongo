@@ -1,14 +1,13 @@
 import { ExportWriter } from "./exportWriter";
 
 export class ConsoleWriter implements ExportWriter {
-    init(): Promise<void> {
-        return Promise.resolve();
+    async init(): Promise<void> {
     }
-    write(data: any, opts: any): Promise<void> {
-        console.log(data);
-        return Promise.resolve();
+    async write(data: any, opts: any): Promise<void> {
+        for (const datum of data) {
+            console.log(datum);
+        }
     }
-    close(): Promise<void> {
-        return Promise.resolve();
+    async close(): Promise<void> {
     }
 }
