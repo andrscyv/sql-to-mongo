@@ -5,7 +5,7 @@ import { ExportWriter } from "./exportWriter";
 export class MongoWriter implements ExportWriter{
     private client: MongoClient;
 
-    constructor({ connectionString }: { connectionString: string }) {
+    constructor({ connectionString }: { connectionString: string | undefined }) {
         if (!connectionString) { throw new Error('MONGO_CONNECTION_STRING is not set'); }
         this.client = new MongoClient(connectionString);
     }

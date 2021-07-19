@@ -15,28 +15,23 @@ export interface Opts {
     dryRun: boolean;
     beforeAllFilePath?: string;
     afterAllFilePath?: string;
-    sqlDbConfig: {
-        host: string;
-        port: number;
-        dbName: string;
-        user: string;
-        password: string;
-    };
+    sqlDbConfig: SqlConfig;
     mongoDbConfig?: {
         connectionString: string;
         dbName: string;
     };
 }
 
+interface SqlConfig {
+    host: string;
+    port: number;
+    username: string;
+    password: string;
+    database: string;
+}
 export interface ConfigFile {
     exportsDirPath: string;
-    sqlDbConfig: {
-        host: string;
-        port: number;
-        dbName: string;
-        user: string;
-        password: string;
-    };
+    sqlDbConfig: SqlConfig;
     mongoDbConfig: {
         connectionString: string;
         dbName: string;
@@ -74,7 +69,7 @@ export function loadOptsFromConfig(args: Args): Opts {
     if (!args['after-all'] && args._.length > 0) { afterAllFilePath = undefined; }
 
     const exportDefsFilePaths = args._.length > 0 ?
-    args._.map(filePath => path.resolve(filePath)) :  getFilePathsOfDir(exportsDirPath);
+        args._.map(filePath => path.resolve(filePath)) : getFilePathsOfDir(exportsDirPath);
 
 
     if (!exportDefsFilePaths || !exportDefsFilePaths.length) {

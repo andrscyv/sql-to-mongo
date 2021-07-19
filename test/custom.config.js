@@ -1,7 +1,7 @@
 module.exports = {
     exportsDirPath: './test_exports',
     sqlDbConfig: {
-        host: 'host',
+        host: 'host2',
         port: 123,
         database: 'name',
         username: 'user',

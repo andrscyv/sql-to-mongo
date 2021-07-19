@@ -16,11 +16,11 @@ test('loads opts from ./s2m.config.js without args', () => {
             dbName: 'mongoDbName',
         },
         sqlDbConfig: {
-            dbName: 'name',
+            database: 'name',
             host: 'host',
             password: 'pass',
             port: 123,
-            user: 'user'
+            username: 'user'
         }
     });
 });
@@ -41,11 +41,11 @@ test('cli args overrides exportDefsFilePaths', () => {
             dbName: 'mongoDbName',
         },
         sqlDbConfig: {
-            dbName: 'name',
+            database: 'name',
             host: 'host',
             password: 'pass',
             port: 123,
-            user: 'user'
+            username: 'user'
         }
     });
 });
@@ -66,11 +66,36 @@ test('if cli args hooks arent executed unless specified', () => {
             dbName: 'mongoDbName',
         },
         sqlDbConfig: {
-            dbName: 'name',
+            database: 'name',
             host: 'host',
             password: 'pass',
             port: 123,
-            user: 'user'
+            username: 'user'
+        }
+    });
+});
+
+test('-c flag overrides default config file path', () => {
+    const testExportsFolderPath = path.resolve('./test_exports');
+    const testExport = 't1.sql';
+    const exportPath = './test_exports2/p1.sql'
+    const resolvedExportPath = path.resolve(exportPath);
+    const opts = loadOptsFromConfig({ _: [exportPath], config: './custom.config.js'});
+    expect(opts).toEqual({
+        afterAllFilePath: undefined,
+        beforeAllFilePath: undefined,
+        dryRun: false,
+        exportDefsFilePaths: [ resolvedExportPath],
+        mongoDbConfig: {
+            connectionString: 'http://mongo',
+            dbName: 'mongoDbName',
+        },
+        sqlDbConfig: {
+            database: 'name',
+            host: 'host2',
+            password: 'pass',
+            port: 123,
+            username: 'user'
         }
     });
 });
