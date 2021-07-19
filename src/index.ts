@@ -6,6 +6,7 @@ import { loadExportDefs } from './exports/exportDefLoader';
 import { runExports } from './exports/exporter';
 import { buildWriter } from './writers/writerBuilder';
 import { Args, loadOptsFromConfig } from './opts/optsLoader';
+import { runAfterAllHook, runBeforeAllHook } from './hooks';
 
 const argv = yargs(hideBin(process.argv))
    .usage('$0 path1 path2 ...')
@@ -27,7 +28,9 @@ async function main(args: Args):Promise<void> {
    const opts = loadOptsFromConfig(args);
    const exportDefs: ExportDefinition[] = await loadExportDefs(opts.exportDefsFilePaths);
    const writer = buildWriter(opts);
+   await runBeforeAllHook(opts);
    await runExports(exportDefs, writer, opts);
+   await runAfterAllHook(opts);
    process.exit(0);
 }
 

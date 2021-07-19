@@ -24,7 +24,7 @@ export async function runExports(exportDefs: ExportDefinition[], writer: ExportW
 async function runExport(sql: any, exportDef: ExportDefinition, writer: ExportWriter, opts: Opts): Promise<void> {
     await sql.unsafe(exportDef.sqlQuery).cursor(2000, async (rows: any) => {
         if (exportDef.beforeEach) { await exportDef.beforeEach(rows); }
-        await writer.write(rows, opts);
+        await writer.write(rows, exportDef);
         if (exportDef.afterEach) { await exportDef.afterEach(); }
     })
 }

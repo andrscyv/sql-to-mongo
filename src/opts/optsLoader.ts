@@ -16,10 +16,7 @@ export interface Opts {
     beforeAllFilePath?: string;
     afterAllFilePath?: string;
     sqlDbConfig: SqlConfig;
-    mongoDbConfig?: {
-        connectionString: string;
-        dbName: string;
-    };
+    mongoDbConfig?: MongoConfig
 }
 
 interface SqlConfig {
@@ -29,13 +26,15 @@ interface SqlConfig {
     password: string;
     database: string;
 }
+
+export interface MongoConfig {
+    connectionString: string;
+    dbName: string;
+}
 export interface ConfigFile {
     exportsDirPath: string;
     sqlDbConfig: SqlConfig;
-    mongoDbConfig: {
-        connectionString: string;
-        dbName: string;
-    };
+    mongoDbConfig: MongoConfig
 }
 
 export function loadOptsFromConfig(args: Args): Opts {
@@ -69,8 +68,7 @@ export function loadOptsFromConfig(args: Args): Opts {
     if (!args['after-all'] && args._.length > 0) { afterAllFilePath = undefined; }
 
     const exportDefsFilePaths = args._.length > 0 ?
-        args._.map(filePath => path.resolve(filePath)) : getFilePathsOfDir(exportsDirPath);
-
+        args._.map(filePath => path.resolve(filePath)) : getExportDefFilePathsOfDir(exportsDirPath);
 
     if (!exportDefsFilePaths || !exportDefsFilePaths.length) {
         throw new Error('No export definition files were specified');
@@ -86,10 +84,12 @@ export function loadOptsFromConfig(args: Args): Opts {
     };
 }
 
-function getFilePathsOfDir(dirPath: string | undefined): string[] {
+function getExportDefFilePathsOfDir(dirPath: string | undefined): string[] {
     if (!dirPath) { return []; }
     try {
-        return readdirSync(dirPath).map(fileName => path.join(dirPath, fileName));
+        return readdirSync(dirPath)
+            .filter(fileName => !(fileName === 'beforeAll.js' || fileName === 'afterAll.js'))
+            .map(fileName => path.join(dirPath, fileName));
     } catch (error) {
         if (error.code === 'ENOENT') {
             throw new Error(`Directory ${dirPath} does not exist`);

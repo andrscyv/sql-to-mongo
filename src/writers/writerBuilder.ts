@@ -4,6 +4,9 @@ import { MongoWriter } from "./mongoWriter";
 
 export function buildWriter(opts: Opts) {
     if (opts.dryRun) { return new ConsoleWriter(); }
+    
     const { mongoDbConfig } = opts;
-    return new MongoWriter({ connectionString : mongoDbConfig?.connectionString });
+    if (!mongoDbConfig) { throw new Error("MongoDB config is required"); }
+
+    return new MongoWriter(mongoDbConfig.connectionString, mongoDbConfig.dbName);
 }
