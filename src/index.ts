@@ -34,4 +34,4 @@ async function main(args: Args):Promise<void> {
    process.exit(0);
 }
 
-main((argv as any) as Args).catch(err => console.error(err));
+main((argv as any) as Args).catch(err => console.error(err.message));

@@ -11,10 +11,6 @@ function parseFilePath(filePath: string): { name:string, fileType:FileType } {
         case '.sql':
             fileType = FileType.SQL;
             break;
-
-        case '.js':
-            fileType = FileType.JS; 
-            break;
         default:
             throw new Error(`Unsupported file type: ${ext}`);
     }
