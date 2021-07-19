@@ -19,7 +19,7 @@ export interface Opts {
     mongoDbConfig?: MongoConfig
 }
 
-interface SqlConfig {
+export interface SqlConfig {
     host: string;
     port: number;
     username: string;
@@ -64,8 +64,10 @@ export function loadOptsFromConfig(args: Args): Opts {
 
     // if file paths were provided as cli args,  beforeAll and afterAll hooks won't run
     // by default unless explicitly specified 
-    if (!args['before-all'] && args._.length > 0) { beforeAllFilePath = undefined; }
-    if (!args['after-all'] && args._.length > 0) { afterAllFilePath = undefined; }
+    //
+    // if its a dry run, we don't want to run the beforeAll and afterAll hooks
+    if ((!args['before-all'] && args._.length > 0) || dryRun) { beforeAllFilePath = undefined; }
+    if ((!args['after-all'] && args._.length > 0) || dryRun) { afterAllFilePath = undefined; }
 
     const exportDefsFilePaths = args._.length > 0 ?
         args._.map(filePath => path.resolve(filePath)) : getExportDefFilePathsOfDir(exportsDirPath);
