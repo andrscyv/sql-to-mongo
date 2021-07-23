@@ -9,7 +9,9 @@ export async function runExports(exportDefs: ExportDefinition[], writer: ExportW
     await reader.init();
     try {
         for (const exportDef of exportDefs) {
-            await reader.pipeToWriter(writer, exportDef);
+            await reader.pipeToWriter(exportDef, async data => {
+                await writer.write(data, exportDef);
+            });
         }
     } catch (error) {
         throw error;
