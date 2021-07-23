@@ -1,10 +1,11 @@
 {
   "name": "psql2mongo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Export data from pgSql to mongo",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,9 @@
     "pgsql",
     "sql"
   ],
+  "bin": {
+    "s2m": "./build/src/index.js"
+  },
   "author": "Andres Cruz",
   "license": "ISC",
   "bugs": {

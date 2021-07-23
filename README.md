@@ -1,3 +1,3 @@
 psql2mongo
 
-Export data from live postgreSQL db to mongodb
+Export data from sql databae to mongo using simple SQL queries.(We only support PostgreSQL for now)
