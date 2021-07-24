@@ -5,7 +5,7 @@ import { ExportWriter } from "../writers/exportWriter";
 export interface ExportReader {
     init(): Promise<void>;
     close(): Promise<void>;
-    pipeToWriter(exportDef: ExportDefinition, pipe: PipeCallBack ): Promise<void>;
+    read(exportDef: ExportDefinition, pipe: PipeCallBack ): Promise<void>;
 }
 
 export type PipeCallBack = (data: any) => Promise<void>;

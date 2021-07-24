@@ -42,6 +42,7 @@
   },
   "dependencies": {
     "mongodb": "^4.0.0",
+    "ora": "^5.4.1",
     "postgres": "^2.0.0-beta.6",
     "yargs": "^17.0.1"
   }

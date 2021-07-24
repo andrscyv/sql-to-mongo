@@ -32,7 +32,7 @@ async function main(args: Args):Promise<void> {
    const writer = buildWriter(opts);
    const reader = buildReader(opts);
    await runBeforeAllHook(opts);
-   await runExports(exportDefs, writer, reader);
+   await runExports(exportDefs, writer, reader, opts);
    await runAfterAllHook(opts);
    process.exit(0);
 }

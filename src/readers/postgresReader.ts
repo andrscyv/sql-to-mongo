@@ -16,7 +16,7 @@ export class PostgresReader implements ExportReader {
     async close(): Promise<void> {
         await this.sql.end({ timeout: 5 });
     }
-    async pipeToWriter(exportDef: ExportDefinition, pipe: PipeCallBack): Promise<void> {
+    async read(exportDef: ExportDefinition, pipe: PipeCallBack): Promise<void> {
         await this.sql.unsafe(exportDef.sqlQuery).cursor(2000, async (rows: any) => {
             await pipe(rows);
         })
