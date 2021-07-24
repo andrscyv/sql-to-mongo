@@ -26,7 +26,7 @@
     "s2m": "./build/src/index.js"
   },
   "author": "Andres Cruz",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/andrscyv/sql-to-mongo/issues"
   },
